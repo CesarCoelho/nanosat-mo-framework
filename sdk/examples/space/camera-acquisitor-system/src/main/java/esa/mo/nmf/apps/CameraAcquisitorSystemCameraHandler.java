@@ -60,7 +60,7 @@ public class CameraAcquisitorSystemCameraHandler
   private static final Logger LOGGER = Logger.getLogger(
       CameraAcquisitorSystemCameraHandler.class.getName());
 
-  private static final String ACTION_PHOTOGRAPH_NOW = "photographNow";
+  public static final String ACTION_PHOTOGRAPH_NOW = "photographNow";
   private static final int PHOTOGRAPH_NOW_STAGES = 3;
   private final CameraAcquisitorSystemMCAdapter casMCAdapter;
 
@@ -68,7 +68,7 @@ public class CameraAcquisitorSystemCameraHandler
   private final int defaultPictureWidth = 2048;
   private final int defaultPictureHeight = 1944;
   public final PixelResolution defaultCameraResolution;
-  private final Duration DEFAULT_CAMERA_EXPOSURE_TIME = new Duration(0.1);
+  private final Duration DEFAULT_CAMERA_EXPOSURE_TIME = new Duration(1.1);
   private final float GAIN_R = 1.0f;
   private final float GAIN_G = 1.0f;
   private final float GAIN_B = 1.0f;
@@ -76,7 +76,6 @@ public class CameraAcquisitorSystemCameraHandler
   public CameraAcquisitorSystemCameraHandler(CameraAcquisitorSystemMCAdapter casMCAdapter)
   {
     this.casMCAdapter = casMCAdapter;
-
     this.defaultCameraResolution =
         new PixelResolution(new UInteger(defaultPictureWidth), new UInteger(
             defaultPictureHeight));
@@ -99,24 +98,19 @@ public class CameraAcquisitorSystemCameraHandler
 
     actionDefs.add(actionDefTakePhotograpNow);
     actionNames.add(new Identifier(ACTION_PHOTOGRAPH_NOW));
+    registration.registerActions(actionNames, actionDefs);
   }
 
-  public UInteger actionArrived(Identifier name, AttributeValueList attributeValues,
-      Long actionInstanceObjId, boolean reportProgress, MALInteraction interaction)
+  UInteger photographNow(AttributeValueList attributeValues, Long actionInstanceObjId,
+      boolean reportProgress, MALInteraction interaction)
   {
-    if (name.getValue() != null) {
-      switch (name.getValue()) {
-        case (ACTION_PHOTOGRAPH_NOW):
-          try {
-            takePhotograph(actionInstanceObjId, 0, PHOTOGRAPH_NOW_STAGES, "_INSTANT");
-          } catch (MALInteractionException | MALException | IOException | NMFException ex) {
-            LOGGER.log(Level.SEVERE, null, ex);
-            return new UInteger(1);
-          }
-          return new UInteger(1);
-      }
+    try {
+      takePhotograph(actionInstanceObjId, 0, PHOTOGRAPH_NOW_STAGES, "_INSTANT");
+    } catch (MALInteractionException | MALException | IOException | NMFException ex) {
+      LOGGER.log(Level.SEVERE, null, ex);
+      return new UInteger(0);
     }
-    return new UInteger(0);
+    return new UInteger(1);
   }
 
   /**
@@ -211,6 +205,7 @@ public class CameraAcquisitorSystemCameraHandler
           fos.flush();
           fos.close();
         }
+        LOGGER.log(Level.INFO, "Photograph was taken at {0}", posString);
       } catch (IOException | MALException ex) {
         LOGGER.log(Level.SEVERE, null, ex);
       }
@@ -283,6 +278,7 @@ public class CameraAcquisitorSystemCameraHandler
       MALInteractionException,
       MALException
   {
+    LOGGER.log(Level.INFO, "Taking Photograph");
     this.casMCAdapter.getConnector().getPlatformServices().getCameraService().takePicture(
         new CameraSettings(
             defaultCameraResolution,
