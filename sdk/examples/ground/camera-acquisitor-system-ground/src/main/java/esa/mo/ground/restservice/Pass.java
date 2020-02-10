@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package esa.mo.ground.cameraacquisotorground;
+package esa.mo.ground.restservice;
 
 import esa.mo.nmf.apps.CameraAcquisitorSystemMCAdapter;
 import org.hipparchus.ode.events.Action;
@@ -16,7 +16,7 @@ import org.orekit.time.AbsoluteDate;
  *
  * @author Kevin Otto <Kevin@KevinOtto.de>
  */
-class Pass implements EventHandler<BooleanDetector>
+public class Pass implements EventHandler<BooleanDetector>
 {
 
   private final AbsoluteDate notBeforeDate;
@@ -25,6 +25,9 @@ class Pass implements EventHandler<BooleanDetector>
   private AbsoluteDate passStart;
   private AbsoluteDate passEnd;
   private AbsoluteDate optimalTime;
+
+  private String resultTime;
+
   private boolean timeFound = false;
 
   private boolean startIsSet = false;
@@ -33,6 +36,11 @@ class Pass implements EventHandler<BooleanDetector>
   {
     this.notBeforeDate = notBeforeDate;
     this.worstCaseRotationTimeSeconds = worstCaseRotationTimeSeconds;
+  }
+
+  public String getResultTime()
+  {
+    return resultTime;
   }
 
   public AbsoluteDate getPassStart()
@@ -67,11 +75,11 @@ class Pass implements EventHandler<BooleanDetector>
       this.passEnd = s.getDate();
       double elepsedTime = this.passEnd.durationFrom(this.passStart);
       this.optimalTime = this.passStart.shiftedBy(elepsedTime / 2);
-
+      this.resultTime = this.optimalTime.toString();
       if (this.optimalTime.durationFrom(CameraAcquisitorSystemMCAdapter.getNow()) <= worstCaseRotationTimeSeconds && this.optimalTime.compareTo(
           this.notBeforeDate) > 0) {
 
-        //time to close, try again
+        //time too close, try again
         startIsSet = false;
         return Action.CONTINUE;
       }

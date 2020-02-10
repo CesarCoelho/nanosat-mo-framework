@@ -5,14 +5,11 @@
  */
 package esa.mo.ground.cameraacquisotorground;
 
-import esa.mo.nmf.apps.CameraAcquisitorSystemMCAdapter;
-import esa.mo.nmf.apps.CameraAcquisitorSystemTargetLocation;
+import esa.mo.ground.restservice.Pass;
+import esa.mo.ground.restservice.PositionAndTime;
 import java.util.Comparator;
 import java.util.LinkedList;
-import java.util.TimerTask;
 import java.util.TreeSet;
-import java.util.logging.Level;
-import org.hipparchus.ode.events.Action;
 import org.hipparchus.util.FastMath;
 import org.orekit.bodies.CelestialBodyFactory;
 import org.orekit.bodies.GeodeticPoint;
@@ -28,7 +25,6 @@ import org.orekit.propagation.events.BooleanDetector;
 import org.orekit.propagation.events.ElevationDetector;
 import org.orekit.propagation.events.EventDetector;
 import org.orekit.propagation.events.GroundAtNightDetector;
-import org.orekit.propagation.events.handlers.EventHandler;
 import org.orekit.time.AbsoluteDate;
 import org.orekit.utils.Constants;
 import org.orekit.utils.IERSConventions;
@@ -51,7 +47,7 @@ public class OrbitHandler
     @Override
     public int compare(PositionAndTime o1, PositionAndTime o2)
     {
-      return o1.date.compareTo(o2.date);
+      return o1.orekitDate.compareTo(o2.orekitDate);
     }
   });
 
@@ -83,24 +79,9 @@ public class OrbitHandler
     propagator = TLEPropagator.selectExtrapolator(initialTLE);
   }
 
-  public class PositionAndTime
-  {
-
-    public final AbsoluteDate date;
-    public final GeodeticPoint location;
-
-    public PositionAndTime(AbsoluteDate date, GeodeticPoint location)
-    {
-      this.date = date;
-      this.location = location;
-    }
-
-  }
-
-  public PositionAndTime[] getPositionSeries(AbsoluteDate startDate, AbsoluteDate endDate,
+  public PositionAndTime[] getGroundTrack(AbsoluteDate startDate, AbsoluteDate endDate,
       double timeStepSeconds)
   {
-
     LinkedList<PositionAndTime> positionSeries = new LinkedList<>();
 
     // get position at every timestep
@@ -126,6 +107,17 @@ public class OrbitHandler
         finalState.getPVCoordinates(earthFrame).getPosition(), earthFrame, finalState.getDate());
   }
 
+  /**
+   *
+   * @param longitude
+   * @param latitude
+   * @param maxAngle
+   * @param timeMode
+   * @param notBeforeDate
+   * @param worstCaseRotationTimeSeconds
+   * @param simulationRange
+   * @return
+   */
   public Pass getPassTime(double longitude, double latitude, double maxAngle,
       TimeModeEnum timeMode, AbsoluteDate notBeforeDate, long worstCaseRotationTimeSeconds,
       long simulationRange)
