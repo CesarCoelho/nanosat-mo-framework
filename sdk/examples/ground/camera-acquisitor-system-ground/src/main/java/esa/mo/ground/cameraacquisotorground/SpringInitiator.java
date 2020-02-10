@@ -1,3 +1,5 @@
+package esa.mo.ground.cameraacquisotorground;
+
 
 import esa.mo.ground.cameraacquisotorground.CameraAcquisitorGround;
 import java.util.Collections;
