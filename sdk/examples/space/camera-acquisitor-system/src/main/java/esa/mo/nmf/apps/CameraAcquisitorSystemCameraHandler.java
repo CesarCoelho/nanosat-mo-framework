@@ -61,7 +61,7 @@ public class CameraAcquisitorSystemCameraHandler
       CameraAcquisitorSystemCameraHandler.class.getName());
 
   public static final String ACTION_PHOTOGRAPH_NOW = "photographNow";
-  private static final int PHOTOGRAPH_NOW_STAGES = 3;
+  public static final int PHOTOGRAPH_NOW_STAGES = 3;
   private final CameraAcquisitorSystemMCAdapter casMCAdapter;
 
   // Camera settings:
