@@ -653,6 +653,7 @@ If the MAL data type specification is being used the body of an object shall not
               <mal:field canBeNull="false" comment="" name="objectInstanceIdentifier">
                 <mal:type area="MAL" list="false" name="Long"/>
               </mal:field>
+            </mal:request>
             <mal:response comment="">
               <mal:field canBeNull="true" comment="" name="currentTime">
                 <mal:type area="MAL" list="false" name="FineTime"/>
