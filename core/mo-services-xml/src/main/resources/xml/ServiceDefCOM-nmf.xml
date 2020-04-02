@@ -460,7 +460,7 @@ If the MAL data type specification is being used the body of an object shall not
         <com:archiveUsage comment="The events generated as part of the activity monitoring pattern may be persisted in a COM archive.&#10;If the activity events are being persisted then the objects that represent the activities (such as an OperationActivity object) should also be persisted."/>
       </com:features>
     </mal:service>
-    <mal:service comment="The ArchiveSync service allows a service consumer to synchronize the COM Archive with a service provider. " name="ArchiveSync" number="4" xsi:type="com:ExtendedServiceType">
+    <mal:service comment="The AAArchiveSync service allows a service consumer to synchronize the COM Archive with a service provider. " name="ArchiveSync" number="4" xsi:type="com:ExtendedServiceType">
       <mal:capabilitySet comment="" number="1">
         <mal:requestIP comment="" name="getTime" number="1" supportInReplay="false">
           <mal:messages>
