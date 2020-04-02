@@ -643,7 +643,7 @@ If the MAL data type specification is being used the body of an object shall not
       <mal:capabilitySet comment="" number="1">
         <mal:requestIP comment="" name="getHistory" number="1" supportInReplay="false">
           <mal:messages>
-            <mal:request comment=""/>
+            <mal:request comment="">
               <mal:field canBeNull="false" comment="" name="domain">
                 <mal:type area="MAL" list="true" name="Identifier"/>
               </mal:field>
