@@ -639,6 +639,175 @@ If the MAL data type specification is being used the body of an object shall not
       </mal:dataTypes>
       <com:features/>
     </mal:service>
+    <mal:service comment="The History service allows a service consumer to check the history of the COM Objects in a service provider. " name="HistoryCOM" number="5" xsi:type="com:ExtendedServiceType">
+      <mal:capabilitySet comment="" number="1">
+        <mal:requestIP comment="" name="getHistory" number="1" supportInReplay="false">
+          <mal:messages>
+            <mal:request comment=""/>
+              <mal:field canBeNull="false" comment="" name="domain">
+                <mal:type area="MAL" list="true" name="Identifier"/>
+              </mal:field>
+              <mal:field canBeNull="false" comment="" name="objectType">
+                <mal:type area="MAL" list="false" name="Identifier"/>
+              </mal:field>
+              <mal:field canBeNull="false" comment="" name="objectInstanceIdentifier">
+                <mal:type area="MAL" list="true" name="Long"/>
+              </mal:field>
+            </mal:request>
+            <mal:response comment="">
+              <mal:field canBeNull="true" comment="" name="versions">
+                <mal:type area="MAL" list="true" name="String"/>
+              </mal:field>
+            </mal:response>
+          </mal:messages>
+        </mal:requestIP>
+      </mal:capabilitySet>
+      <mal:capabilitySet comment="" number="2">
+          <mal:messages>
+            <mal:request comment=""/>
+              <mal:field canBeNull="false" comment="" name="domain">
+                <mal:type area="MAL" list="true" name="Identifier"/>
+              </mal:field>
+              <mal:field canBeNull="false" comment="" name="objectType">
+                <mal:type area="MAL" list="false" name="Identifier"/>
+              </mal:field>
+              <mal:field canBeNull="false" comment="" name="objectInstanceIdentifier">
+                <mal:type area="MAL" list="true" name="Long"/>
+              </mal:field>
+            </mal:request>
+            <mal:response comment="">
+              <mal:field canBeNull="true" comment="" name="versions">
+                <mal:type area="MAL" list="true" name="String"/>
+              </mal:field>
+            </mal:response>
+          </mal:messages>
+        </mal:requestIP>
+      </mal:capabilitySet>
+      <mal:capabilitySet comment="" number="3">
+        <mal:progressIP comment="" name="retrieveRangeAgain" number="3" supportInReplay="false">
+          <mal:messages>
+            <mal:progress comment="">
+              <mal:field canBeNull="true" comment="" name="interactionTicket">
+                <mal:type area="MAL" list="false" name="Long"/>
+              </mal:field>
+            <mal:field canBeNull="true" comment="" name="missingIndexes">
+                <mal:type area="MAL" list="true" name="UInteger"/>
+              </mal:field>
+            </mal:progress>
+            <mal:acknowledgement comment=""/>
+            <mal:update comment="">
+              <mal:field canBeNull="true" comment="" name="chunk">
+                <mal:type area="MAL" list="false" name="Blob"/>
+              </mal:field>
+              <mal:field canBeNull="true" comment="" name="index">
+                <mal:type area="MAL" list="false" name="UInteger"/>
+              </mal:field>
+            </mal:update>
+            <mal:response comment=""/>
+          </mal:messages>
+        </mal:progressIP>
+      </mal:capabilitySet>
+      <mal:capabilitySet comment="" number="4">
+        <mal:requestIP comment="" name="getDictionary" number="4" supportInReplay="false">
+          <mal:messages>
+            <mal:request comment="">
+              <mal:field canBeNull="true" comment="" name="wordIds">
+                <mal:type area="MAL" list="true" name="Integer"/>
+              </mal:field>
+            </mal:request>
+            <mal:response comment="">
+              <mal:field canBeNull="true" comment="" name="words">
+                <mal:type area="MAL" list="true" name="String"/>
+              </mal:field>
+            </mal:response>
+          </mal:messages>
+        </mal:requestIP>
+      </mal:capabilitySet>
+      <mal:capabilitySet comment="" number="5">
+        <mal:submitIP comment="" name="free" number="5" supportInReplay="false">
+          <mal:messages>
+            <mal:submit comment="">
+              <mal:field canBeNull="true" comment="" name="transactionTicket">
+                <mal:type area="MAL" list="false" name="Long"/>
+              </mal:field>
+            </mal:submit>
+          </mal:messages>
+          <mal:errors>
+            <mal:errorRef comment="The provided transaction ticket is unknown.">
+              <mal:type area="MAL" list="false" name="UNKNOWN"/>
+            </mal:errorRef>
+          </mal:errors>
+        </mal:submitIP>
+      </mal:capabilitySet>
+      <mal:dataTypes>
+        <mal:composite comment="The DictionaryEntry structure is used to hold information about a single entry of the Dictionary." name="DictionaryEntry" shortFormPart="7">
+          <mal:extends>
+            <mal:type area="MAL" list="false" name="Composite"/>
+          </mal:extends>
+          <mal:field canBeNull="true" comment="The id of the entry." name="id">
+          <mal:type area="MAL" list="false" name="UInteger"/>
+          </mal:field>
+          <mal:field canBeNull="true" comment="The associated string." name="string">
+            <mal:type area="MAL" list="false" name="String"/>
+          </mal:field>
+        </mal:composite>
+      <mal:composite comment="The Dictionary structure is used to hold information about the Dictionary." name="Dictionary" shortFormPart="8">
+          <mal:extends>
+            <mal:type area="MAL" list="false" name="Composite"/>
+          </mal:extends>
+          <mal:field canBeNull="true" comment="The entries of the dictionary." name="entries">
+          <mal:type area="COM" list="true" name="DictionaryEntry" service="ArchiveSync"/>
+          </mal:field>
+        </mal:composite>
+      <mal:composite comment="The CompactCOMObject structure is used to hold the information of a COM Object based on a content from a dictionary." name="CompactCOMObject" shortFormPart="9">
+          <mal:extends>
+            <mal:type area="MAL" list="false" name="Composite"/>
+          </mal:extends>
+          <mal:field canBeNull="true" comment="The network field of the COM Object. It points to a certain id in the dictionary." name="network">
+          <mal:type area="MAL" list="false" name="UInteger"/>
+          </mal:field>
+          <mal:field canBeNull="true" comment="The provider field of the COM Object. It points to a certain id in the dictionary." name="providerURI">
+            <mal:type area="MAL" list="false" name="UInteger"/>
+          </mal:field>
+        <mal:field canBeNull="false" comment="The Object Type of the COM Object." name="objectType">
+          <mal:type area="MAL" list="false" name="Long"/>
+          </mal:field>
+          <mal:field canBeNull="true" comment="The source link Domain of the COM Object. It points to a certain id in the dictionary." name="sourceLinkDomainId">
+          <mal:type area="MAL" list="false" name="UInteger"/>
+          </mal:field>
+          <mal:field canBeNull="true" comment="The source link Object Type of the COM Object. It points to a certain id in the dictionary." name="sourceLinkObjectType">
+          <mal:type area="MAL" list="false" name="Long"/>
+          </mal:field>
+          <mal:field canBeNull="true" comment="The source link Object Instance Identifier of the COM Object." name="sourceLinkObjId">
+          <mal:type area="MAL" list="false" name="Long"/>
+          </mal:field>
+        <mal:field canBeNull="true" comment="The related link of the COM Object." name="relatedLink">
+            <mal:type area="MAL" list="false" name="Long"/>
+          </mal:field>
+        <mal:field canBeNull="true" comment="The object body of the COM Object." name="objectBody">
+          <mal:type area="MAL" list="false" name="Blob"/>
+          </mal:field>
+          <mal:field canBeNull="false" comment="The Object Instance Identifier of the COM Object." name="objId">
+            <mal:type area="MAL" list="false" name="Long"/>
+          </mal:field>
+        <mal:field canBeNull="false" comment="The timestamp of the COM Object." name="timestamp">
+            <mal:type area="MAL" list="false" name="FineTime"/>
+          </mal:field>
+        </mal:composite>
+      <mal:composite comment="The DomainizedCOMObjects structure is used to hold the a set of CompactCOMObjects that share the same domain." name="DomainizedCOMObjects" shortFormPart="10">
+          <mal:extends>
+            <mal:type area="MAL" list="false" name="Composite"/>
+          </mal:extends>
+        <mal:field canBeNull="true" comment="The domain field of the COM Object. It points to a certain id in the dictionary." name="domain">
+            <mal:type area="MAL" list="false" name="UInteger"/>
+          </mal:field>
+          <mal:field canBeNull="true" comment="The compactCOMObjects field holds a set of COM Objects." name="compactCOMObjects">
+            <mal:type area="COM" list="true" name="CompactCOMObject" service="ArchiveSync"/>
+          </mal:field>
+        </mal:composite>
+      </mal:dataTypes>
+      <com:features/>
+    </mal:service>
     <mal:dataTypes>
       <mal:composite comment="The ObjectType structure uniquely identifies the type of an object. It is the combination of the area number, service number, area version, and service object type number. The combined parts are able to fit inside a MAL::Long (for implementations that prefer to index on a single numeric field rather than a structure)." name="ObjectType" shortFormPart="1">
         <mal:extends>
