@@ -663,25 +663,6 @@ If the MAL data type specification is being used the body of an object shall not
         </mal:requestIP>
       </mal:capabilitySet>
       <mal:capabilitySet comment="" number="2">
-          <mal:messages>
-            <mal:request comment=""/>
-              <mal:field canBeNull="false" comment="" name="domain">
-                <mal:type area="MAL" list="true" name="Identifier"/>
-              </mal:field>
-              <mal:field canBeNull="false" comment="" name="objectType">
-                <mal:type area="MAL" list="false" name="Identifier"/>
-              </mal:field>
-              <mal:field canBeNull="false" comment="" name="objectInstanceIdentifier">
-                <mal:type area="MAL" list="true" name="Long"/>
-              </mal:field>
-            </mal:request>
-            <mal:response comment="">
-              <mal:field canBeNull="true" comment="" name="versions">
-                <mal:type area="MAL" list="true" name="String"/>
-              </mal:field>
-            </mal:response>
-          </mal:messages>
-        </mal:requestIP>
       </mal:capabilitySet>
       <mal:capabilitySet comment="" number="3">
         <mal:progressIP comment="" name="retrieveRangeAgain" number="3" supportInReplay="false">
