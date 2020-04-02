@@ -639,7 +639,7 @@ If the MAL data type specification is being used the body of an object shall not
       </mal:dataTypes>
       <com:features/>
     </mal:service>
-    <mal:service comment="The History service allows a service consumer to check the history of the COM Objects in a service provider. " name="HistoryCOM" number="5" xsi:type="com:ExtendedServiceType">
+    <mal:service comment="The History service allows a service consumer to check the history of the COM Objects in a service provider. " name="History" number="5" xsi:type="com:ExtendedServiceType">
       <mal:capabilitySet comment="" number="1">
         <mal:requestIP comment="" name="getHistory" number="1" supportInReplay="false">
           <mal:messages>
@@ -655,28 +655,31 @@ If the MAL data type specification is being used the body of an object shall not
               </mal:field>
             </mal:request>
             <mal:response comment="">
-              <mal:field canBeNull="true" comment="" name="versions">
-                <mal:type area="MAL" list="true" name="Long"/>
+              <mal:field canBeNull="false" comment="The ids of the versions." name="versionIds">
+                <mal:type area="MAL" list="true" name="Integer"/>
+              </mal:field>
+              <mal:field canBeNull="false" comment="" name="createdOn">
+                <mal:type area="MAL" list="true" name="FineTime"/>
               </mal:field>
             </mal:response>
           </mal:messages>
         </mal:requestIP>
       </mal:capabilitySet>
       <mal:capabilitySet comment="" number="2">
-        <mal:requestIP comment="" name="getSpecificVersion" number="2" supportInReplay="false">
+        <mal:requestIP comment="" name="getSpecificVersions" number="2" supportInReplay="false">
           <mal:messages>
             <mal:request comment="">
               <mal:field canBeNull="false" comment="The first part of the request shall contain the type of the object required.&#10;If any of the fields of the object type contains the wildcard value of '0' then an INVALID error shall be returned.&#10;The second part of the request shall contain the domain to match.&#10;If the domain contains the wildcard value of '*' then an INVALID error shall be returned.&#10;The third part of the request shall contain the list of object instance identifiers to match.&#10;If the object instance identifier list contains the wildcard value '0' then all object instances shall be matched.&#10;If any explicitly requested object cannot be matched then an UNKNOWN error shall be returned." name="objType">
                 <mal:type area="COM" list="false" name="ObjectType"/>
               </mal:field>
-              <mal:field canBeNull="false" name="domain">
+              <mal:field canBeNull="false" name="domain" comment="The domain field.">
                 <mal:type area="MAL" list="false" name="Identifier"/>
               </mal:field>
               <mal:field canBeNull="false" name="objInstIds">
                 <mal:type area="MAL" list="false" name="Long"/>
               </mal:field>
-              <mal:field canBeNull="false" name="version">
-                <mal:type area="MAL" list="true" name="String"/>
+              <mal:field canBeNull="false" name="versions">
+                <mal:type area="MAL" list="true" name="Integer"/>
               </mal:field>
             </mal:request>
             <mal:response comment="">
