@@ -651,57 +651,37 @@ If the MAL data type specification is being used the body of an object shall not
                 <mal:type area="MAL" list="false" name="Identifier"/>
               </mal:field>
               <mal:field canBeNull="false" comment="" name="objectInstanceIdentifier">
-                <mal:type area="MAL" list="false" name="Long"/>
+                <mal:type area="MAL" list="true" name="Long"/>
               </mal:field>
             </mal:request>
             <mal:response comment="">
-              <mal:field canBeNull="true" comment="" name="currentTime">
-                <mal:type area="MAL" list="false" name="FineTime"/>
-              </mal:field>
-              <mal:field canBeNull="true" comment="" name="lastSyncTime">
-                <mal:type area="MAL" list="false" name="FineTime"/>
+              <mal:field canBeNull="true" comment="" name="versions">
+                <mal:type area="MAL" list="true" name="String"/>
               </mal:field>
             </mal:response>
           </mal:messages>
         </mal:requestIP>
       </mal:capabilitySet>
       <mal:capabilitySet comment="" number="2">
-        <mal:progressIP comment="The" name="retrieveRange" number="2" supportInReplay="false">
           <mal:messages>
-            <mal:progress comment="">
-              <mal:field canBeNull="true" comment="" name="from">
-                <mal:type area="MAL" list="false" name="FineTime"/>
+            <mal:request comment=""/>
+              <mal:field canBeNull="false" comment="" name="domain">
+                <mal:type area="MAL" list="true" name="Identifier"/>
               </mal:field>
-              <mal:field canBeNull="true" comment="" name="until">
-                <mal:type area="MAL" list="false" name="FineTime"/>
-              </mal:field>
-            <mal:field canBeNull="true" comment="" name="objectTypes">
-                <mal:type area="COM" list="true" name="ObjectType"/>
-              </mal:field>
-            <mal:field canBeNull="true" comment="" name="compression">
+              <mal:field canBeNull="false" comment="" name="objectType">
                 <mal:type area="MAL" list="false" name="Identifier"/>
               </mal:field>
-            </mal:progress>
-            <mal:acknowledgement comment="">
-              <mal:field canBeNull="true" comment="" name="interactionTicket">
-                <mal:type area="MAL" list="false" name="Long"/>
+              <mal:field canBeNull="false" comment="" name="objectInstanceIdentifier">
+                <mal:type area="MAL" list="true" name="Long"/>
               </mal:field>
-            </mal:acknowledgement>
-            <mal:update comment="">
-              <mal:field canBeNull="true" comment="" name="chunk">
-                <mal:type area="MAL" list="false" name="Blob"/>
-              </mal:field>
-              <mal:field canBeNull="true" comment="" name="index">
-                <mal:type area="MAL" list="false" name="UInteger"/>
-              </mal:field>
-            </mal:update>
+            </mal:request>
             <mal:response comment="">
-              <mal:field canBeNull="true" comment="" name="numberOfChunks">
-                <mal:type area="MAL" list="false" name="UInteger"/>
+              <mal:field canBeNull="true" comment="" name="versions">
+                <mal:type area="MAL" list="true" name="String"/>
               </mal:field>
             </mal:response>
           </mal:messages>
-        </mal:progressIP>
+        </mal:requestIP>
       </mal:capabilitySet>
       <mal:capabilitySet comment="" number="3">
         <mal:progressIP comment="" name="retrieveRangeAgain" number="3" supportInReplay="false">
